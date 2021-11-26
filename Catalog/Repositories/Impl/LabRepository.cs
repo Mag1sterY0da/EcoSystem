@@ -12,7 +12,7 @@ namespace DAL.Repositories.Impl
     public class LabRepository
        : BaseRepository<Lab>, ILabRepository
     {
-        internal LabRepository(EnterpriceContext context)
+        internal LabRepository(EnterpriceContext context)   
             : base(context)
         {
         }

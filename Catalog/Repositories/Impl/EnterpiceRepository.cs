@@ -8,11 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories.Impl
-{
-    public class EnterpriceRepository
+{    public class EnterpriceRepository
         : BaseRepository<Enterprice>, IEnterpriceRepository
     {
-​
         internal EnterpriceRepository(EnterpriceContext context)
             : base(context)
         {

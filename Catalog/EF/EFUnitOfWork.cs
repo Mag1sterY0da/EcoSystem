@@ -4,10 +4,6 @@ using DAL.Repositories.Interfaces;
 using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.EF
 {
@@ -15,40 +11,41 @@ namespace DAL.EF
         : IUnitOfWork
     {
         private EnterpriceContext db;
-        private EnterpriceRepository enterpriceRepository;
-        private LabRepository labRepository;
-        private RecRepository recRepository;
+        private EnterpriceRepository EnterpriceRepository;
+        private LabRepository LabRepository;
+        private RecRepository RecRepository;
 
-        public EFUnitOfWork(DbContextOptions options)
+        public EFUnitOfWork(EnterpriceContext context)
         {
-            db = new EnterpriceContext(options);
+            db = context;
         }
-        public IRepository<Enterprice> Enterprices
+        public IEnterpriceRepository Enterprices
         {
             get
             {
-                if (enterpriceRepository == null)
-                    enterpriceRepository = new EnterpriceRepository(db);
-                return enterpriceRepository;
+                if (EnterpriceRepository == null)
+                    EnterpriceRepository = new EnterpriceRepository(db);
+                return EnterpriceRepository;
             }
         }
-​
-        public IRepository<Lab> Labs
+
+        public ILabRepository Labs
         {
             get
             {
-                if (labRepository == null)
-                    labRepository = new LabRepository(db);
-                return labRepository;
+                if (LabRepository == null)
+                    LabRepository = new LabRepository(db);
+                return LabRepository;
             }
         }
-        public IRepository<Rec> Recs
+
+        public IRecRepository Recss
         {
             get
             {
-                if (recRepository == null)
-                    recRepository = new RecRepository(db);
-                return recRepository;
+                if (RecRepository == null)
+                    RecRepository = new RecRepository(db);
+                return RecRepository;
             }
         }
 
@@ -62,9 +59,9 @@ namespace DAL.EF
         {
             db.SaveChanges();
         }
-​
+
         private bool disposed = false;
-​
+
         public virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -76,11 +73,21 @@ namespace DAL.EF
                 this.disposed = true;
             }
         }
-​
+
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        void IUnitOfWork.Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
