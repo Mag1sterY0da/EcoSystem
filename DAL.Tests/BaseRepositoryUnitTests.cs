@@ -10,10 +10,10 @@ using Moq;
 
 namespace DAL.Tests
 {
-    class TestRegionRepository
+    class TestLabsRepository
         : BaseRepository<Lab>
     {
-        public TestRegionRepository(DbContext context)
+        public TestLabsRepository(DbContext context)
             : base(context)
         {
         }
@@ -23,7 +23,7 @@ namespace DAL.Tests
     {
 
         [Fact]
-        public void Create_InputRegionInstance_CalledAddMethodOfDBSetWithRegionInstance()
+        public void Create_InputlabInstance_CalledAddMethodOfDBSetWithLabInstance()
         {
             // Arrange
             DbContextOptions opt = new DbContextOptionsBuilder<EnterpriceContext>()
@@ -36,17 +36,17 @@ namespace DAL.Tests
                         ))
                 .Returns(mockDbSet.Object);
             //EFUnitOfWork uow = new EFUnitOfWork(mockContext.Object);
-            var repository = new TestRegionRepository(mockContext.Object);
+            var repository = new TestLabsRepository(mockContext.Object);
 
-            Lab expectedRegion = new Mock<Lab>().Object;
+            Lab expectedLab = new Mock<Lab>().Object;
 
             //Act
-            repository.Create(expectedRegion);
+            repository.Create(expectedLab);
 
             // Assert
             mockDbSet.Verify(
                 dbSet => dbSet.Add(
-                    expectedRegion
+                    expectedLab
                     ), Times.Once());
         }
 
@@ -65,18 +65,18 @@ namespace DAL.Tests
                 .Returns(mockDbSet.Object);
             //EFUnitOfWork uow = new EFUnitOfWork(mockContext.Object);
             //IStreetRepository repository = uow.Streets;
-            var repository = new TestRegionRepository(mockContext.Object);
+            var repository = new TestLabsRepository(mockContext.Object);
 
-            Lab expectedRegion = new Lab() { LabId = 1 };
-            mockDbSet.Setup(mock => mock.Find(expectedRegion.LabId)).Returns(expectedRegion);
+            Lab expectedRegion = new Lab() { LabID = 1 };
+            mockDbSet.Setup(mock => mock.Find(expectedRegion.LabID)).Returns(expectedRegion);
 
             //Act
-            repository.Delete(expectedRegion.LabId);
+            repository.Delete(expectedRegion.LabID);
 
             // Assert
             mockDbSet.Verify(
                 dbSet => dbSet.Find(
-                    expectedRegion.LabId
+                    expectedRegion.LabID
                     ), Times.Once());
             mockDbSet.Verify(
                 dbSet => dbSet.Remove(
@@ -98,18 +98,18 @@ namespace DAL.Tests
                         ))
                 .Returns(mockDbSet.Object);
 
-            Lab expectedRegion = new Lab() { LabId = 1 };
-            mockDbSet.Setup(mock => mock.Find(expectedRegion.LabId))
+            Lab expectedRegion = new Lab() { LabID = 1 };
+            mockDbSet.Setup(mock => mock.Find(expectedRegion.LabID))
                     .Returns(expectedRegion);
-            var repository = new TestRegionRepository(mockContext.Object);
+            var repository = new TestLabsRepository(mockContext.Object);
 
             //Act
-            var actualStreet = repository.Get(expectedRegion.LabId);
+            var actualStreet = repository.Get(expectedRegion.LabID);
 
             // Assert
             mockDbSet.Verify(
                 dbSet => dbSet.Find(
-                    expectedRegion.LabId
+                    expectedRegion.LabID
                     ), Times.Once());
             Assert.Equal(expectedRegion, actualStreet);
         }

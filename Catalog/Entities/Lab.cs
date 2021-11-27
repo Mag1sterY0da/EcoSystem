@@ -8,7 +8,7 @@ namespace DAL.Entities
 {
     public class Lab
     {
-        public int LabId { get; set; }
+        public int LabID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public IEnumerable<Rec> Recs { get; set; }
