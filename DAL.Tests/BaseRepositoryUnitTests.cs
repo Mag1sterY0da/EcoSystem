@@ -19,6 +19,15 @@ namespace DAL.Tests
         }
     }
 
+    class TestRecsRepository
+        : RecRepository
+    {
+        public TestRecsRepository(DbContext context)
+            : base(context)
+        {
+        }
+    }
+
     public class BaseRepositoryUnitTests
     {
 
@@ -113,7 +122,46 @@ namespace DAL.Tests
                     ), Times.Once());
             Assert.Equal(expectedRegion, actualStreet);
         }
+        [Fact]
+        public void GetClone_Rec()
+        {
+            /* DbContextOptions opt = new DbContextOptionsBuilder<EnterpriceContext>()
+                .Options;
+            var mockContext = new Mock<EnterpriceContext>(opt);
+            var mockDbSet = new Mock<DbSet<Rec>>();
+            mockContext
+                .Setup(context =>
+                    context.Set<Rec>(
+                        ))
+                .Returns(mockDbSet.Object);
+
+            //Rec expectedRegion = new Rec() { Id = 1 };
+            mockDbSet.Setup(mock => mock.Find(expectedRegion.Id))
+                    .Returns(expectedRegion);
+            var repository = new TestRecsRepository(mockContext.Object);
+
+            //Act
+            //var actualStreet = repository.Get(expectedRegion.Id);
+            Rec expectedRegion = new Rec() { Id = 1 };
+            var actualStreet = repository.Operation(1);
 
 
+            // Assert
+            mockDbSet.Verify(
+                dbSet => dbSet.Find(
+                    expectedRegion.Id
+                    ), Times.Once());
+            Assert.Equal(expectedRegion.Id, actualStreet.Id);*/
+            DbContextOptions opt = new DbContextOptionsBuilder<EnterpriceContext>()
+               .Options;
+            var mockContext = new Mock<EnterpriceContext>(opt);
+            var repository = new TestRecsRepository(mockContext.Object);
+            Rec expectedRec1 = new Rec() { Id = 1, Date = "01.01.1999", Pollution = true, Pollution_type = "Amiac", Pollution_metrics = 10 };
+            Rec expectedRec2 = new Rec() { Id = 1, Date = "01.01.1999", Pollution = true, Pollution_type = "Amiac"};
+            var cloneRec1 = repository.CloneRecPull(1, "01.01.1999", true, "Amiac", 10);
+            var cloneRec2 = repository.CloneRecNoPull(1, "01.01.1999", false, "Amiac");
+            Assert.Equal(expectedRec1.Id, cloneRec1.Id);
+            Assert.Equal(expectedRec2.Id, cloneRec2.Id);
+        }
     }
 }

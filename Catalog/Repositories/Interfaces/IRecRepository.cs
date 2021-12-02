@@ -10,5 +10,14 @@ namespace DAL.Repositories.Interfaces
     public interface IRecRepository
         : IRepository<Rec>
     {
+        void CloneRecNoPull(int id)
+        {
+        }
+        void CloneRecPull(int id)
+        {
+
+        }
+            
     }
+
 }
