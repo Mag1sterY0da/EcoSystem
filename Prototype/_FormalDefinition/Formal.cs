@@ -4,8 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Repositories.Impl
+namespace Prototype._FormalDefinition
 {
+    class Laborant
+    {
+        void Operation(int Id, string Date, Boolean Pollution, string Pollution_type, int Pollution_metrics)
+        {
+            Prototype prototype = new ConcretePrototype1(Id, Date, Pollution, Pollution_type, Pollution_metrics);
+            Prototype clone = prototype.Clone();
+            prototype = new ConcretePrototype2(Id, Date, Pollution, Pollution_type, Pollution_metrics);
+            clone = prototype.Clone();
+        }
+
+    }
     public abstract class Prototype
     {
         public int Id { get; private set; }
