@@ -1,6 +1,6 @@
 ﻿using Observer;
 
-namespace Facade
+namespace Observer
 {
     class Programm
     {
